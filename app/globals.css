@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   YUSHO TRAVEL design tokens
+   Palette: deep forest green · teal | warm gold | sand/off-white · charcoal
+   Type: Fraunces (display serif) + Manrope (sans)
+   ────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* Deep natural green */
+  --color-forest-50: #f3f7f4;
+  --color-forest-100: #e3ece5;
+  --color-forest-200: #c7d9cc;
+  --color-forest-300: #9dbba5;
+  --color-forest-400: #6d9779;
+  --color-forest-500: #4b7a5b;
+  --color-forest-600: #386149;
+  --color-forest-700: #2d4e3c;
+  --color-forest-800: #263f32;
+  --color-forest-900: #1e3329;
+  --color-forest-950: #0e1d15;
+
+  /* Teal / turquoise */
+  --color-teal-50: #effaf7;
+  --color-teal-100: #d0f2eb;
+  --color-teal-200: #a3e4d8;
+  --color-teal-300: #6bcfbf;
+  --color-teal-400: #3eb5a3;
+  --color-teal-500: #259a89;
+  --color-teal-600: #1b7b6e;
+  --color-teal-700: #186259;
+  --color-teal-800: #174f49;
+  --color-teal-900: #15423d;
+  --color-teal-950: #072623;
+
+  /* Warm golden accent */
+  --color-gold-50: #fdf9ed;
+  --color-gold-100: #f9efcd;
+  --color-gold-200: #f2dd97;
+  --color-gold-300: #ecc861;
+  --color-gold-400: #e6b23a;
+  --color-gold-500: #d99a22;
+  --color-gold-600: #bd791a;
+  --color-gold-700: #975a19;
+  --color-gold-800: #7c491a;
+  --color-gold-900: #673d1b;
+  --color-gold-950: #3b1f0b;
+
+  /* Warm off-white / sand */
+  --color-sand-50: #fbfaf6;
+  --color-sand-100: #f5f0e5;
+  --color-sand-200: #ece2cd;
+  --color-sand-300: #dfcfad;
+  --color-sand-400: #cdb585;
+
+  /* Charcoal ink */
+  --color-ink-900: #161c18;
+  --color-ink-700: #2a312c;
+  --color-ink-500: #525c56;
+  --color-ink-400: #6d776f;
+  --color-ink-200: #c2c9c4;
+
+  --radius-card: 1.25rem;
+  --radius-blob: 2rem;
+
+  --shadow-card: 0 1px 2px rgb(16 30 23 / 0.05), 0 12px 30px -14px rgb(16 30 23 / 0.18);
+  --shadow-card-hover: 0 2px 5px rgb(16 30 23 / 0.06), 0 30px 55px -22px rgb(16 30 23 / 0.3);
+  --shadow-pop: 0 24px 60px -18px rgb(16 30 23 / 0.38);
+  --shadow-glow-gold: 0 8px 30px -10px rgb(230 178 58 / 0.55);
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.9s ease both;
+  --animate-scale-in: scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-kenburns: kenburns 20s ease-out both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-dash: dash 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  --animate-slow-pan: slow-pan 26s ease-in-out infinite alternate;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(26px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes kenburns {
+    from { transform: scale(1.14) translateY(-1.5%); }
+    to { transform: scale(1.03) translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -120; }
+  }
+  @keyframes slow-pan {
+    from { object-position: 50% 30%; }
+    to { object-position: 50% 70%; }
+  }
+}
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-sand-50 text-ink-900 font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-display;
+    font-optical-sizing: auto;
+  }
+
+  ::selection {
+    background: var(--color-gold-300);
+    color: var(--color-forest-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  img {
+    @apply select-none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Utilities ─────────────────────────────────────────────────────────────── */
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-teal-700;
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+}
+
+/* Scroll-reveal system (paired with <Reveal /> client component) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal[data-dir="left"] { transform: translate(-32px, 0); }
+.reveal[data-dir="right"] { transform: translate(32px, 0); }
+.reveal[data-dir="scale"] { transform: scale(0.95); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--color-ink-900) 8%, transparent);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.6),
+    transparent
+  );
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* Editorial drop-cap for long destination descriptions */
+.dropcap::first-letter {
+  @apply font-display float-left mt-1 mr-3 text-6xl leading-[0.8] font-semibold text-forest-700;
+}
+
+/* Dashed journey line for the hero */
+.journey-path {
+  stroke-dasharray: 4 7;
+  animation: dash var(--journey-speed, 2.4s) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Thin gold rule used under section eyebrows */
+.gold-rule {
+  height: 1px;
+  flex: 1;
+  max-width: 56px;
+  background: linear-gradient(to right, var(--color-gold-400), transparent);
+}
+
+@media print {
+  header, footer { display: none; }
+}

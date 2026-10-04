@@ -1,0 +1,277 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// YUSHO TRAVEL — Prisma schema
+// ─────────────────────────────────────────────────────────────────────────────
+// Designed to run identically on SQLite (local dev) and PostgreSQL (production).
+// Deliberately avoids Postgres-only features (enums, Json fields, scalar lists)
+// so switching providers is a one-line change — see README.
+//
+// Production: provider = "postgresql", DATABASE_URL = your hosted Postgres.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // switch to "postgresql" for production
+  url      = env("DATABASE_URL")
+}
+
+// ── Users ─────────────────────────────────────────────────────────────────────
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String?
+  passwordHash String
+  role         String   @default("USER") // USER | ADMIN
+  profileImage String?
+  bio          String?
+  resetToken   String? // one-time password reset token (hashed)
+  resetExpiry  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bookings            Booking[]
+  eventBookings       EventBooking[]
+  reviews             Review[]
+  savedDestinations   SavedDestination[]
+  studentServices     StudentService[]
+  privateTourRequests PrivateTourRequest[]
+}
+
+// ── Destinations ──────────────────────────────────────────────────────────────
+model Destination {
+  id           String  @id @default(cuid())
+  slug         String  @unique
+  name         String
+  tagline      String?
+  description  String
+  location     String
+  region       String? // filter group, e.g. "Arba Minch", "Lake", "Highlands"
+  duration     String // display string, e.g. "Full day"
+  durationHours Float? // numeric duration for filtering & sorting
+  basePrice    Float // starting price in ETB
+  rating       Float  @default(0)
+  reviewCount  Int    @default(0)
+  category     String @default("Nature") // Nature | Wildlife | Cultural | Adventure | Lake
+  highlights   String // "|"-separated list
+  thingsToDo   String // "|"-separated list
+  whatsIncluded String?
+  whatsExcluded String?
+  requirements  String?
+  meetingInfo   String?
+  latitude      Float?
+  longitude     Float?
+  mapQuery      String? // human readable place for the embedded map
+  featured      Boolean @default(false)
+  active        Boolean @default(true)
+  demoSeed      Boolean @default(false) // marks development seed data
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  images   DestinationImage[]
+  packages TourPackage[]
+  bookings Booking[]
+  reviews  Review[]
+  savedBy  SavedDestination[]
+}
+
+model DestinationImage {
+  id            String @id @default(cuid())
+  destinationId String
+  imageUrl      String
+  altText       String?
+  order         Int    @default(0)
+
+  destination Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+}
+
+model TourPackage {
+  id            String  @id @default(cuid())
+  destinationId String
+  name          String
+  description   String?
+  price         Float
+  duration      String?
+  maxGroupSize  Int?
+  minGroupSize  Int?
+  privateOnly   Boolean @default(false)
+  active        Boolean @default(true)
+  demoSeed      Boolean @default(false)
+
+  destination Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  bookings    Booking[]
+}
+
+// ── Bookings (destination tours) ──────────────────────────────────────────────
+model Booking {
+  id            String   @id @default(cuid())
+  bookingRef    String   @unique // public reference like YS-2026-XXXXXX
+  userId        String
+  destinationId String
+  packageId     String
+  date          DateTime
+  numberOfPeople Int
+  mode          String   @default("GROUP") // GROUP | PRIVATE | FAMILY
+  addOns        String? // JSON array of optional services
+  customerName  String
+  customerPhone String
+  customerEmail String
+  specialRequest String?
+  totalPrice    Float
+  status        String   @default("PENDING") // PENDING CONFIRMED CANCELLED COMPLETED REJECTED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  destination Destination   @relation(fields: [destinationId], references: [id])
+  package     TourPackage   @relation(fields: [packageId], references: [id])
+  review      Review?
+}
+// ── Events ─────────────────────────────────────────────────────────────────────
+model Event {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  title          String
+  description    String
+  category       String   @default("social") // concert | cultural | social | outdoor | student | private
+  date           DateTime
+  endDate        DateTime?
+  startTime      String? // display text e.g. "7:00 PM"
+  location       String
+  price          Float
+  capacity       Int
+  availableSeats Int      @default(0)
+  image          String?
+  gallery        String? // "|"-separated extra images
+  status         String   @default("UPCOMING") // UPCOMING | PAST | CANCELLED | DRAFT
+  organizer      String?
+  rules          String?
+  demoSeed       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  bookings EventBooking[]
+  reviews  Review[]
+}
+
+model EventBooking {
+  id            String   @id @default(cuid())
+  reference     String   @unique
+  userId        String
+  eventId       String
+  quantity      Int
+  totalPrice    Float
+  attendeeName  String?
+  attendeePhone String?
+  status        String   @default("PENDING") // PENDING | CONFIRMED | CANCELLED | COMPLETED | REJECTED
+  createdAt     DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+// ── Reviews ────────────────────────────────────────────────────────────────────
+model Review {
+  id            String   @id @default(cuid())
+  userId        String
+  bookingId     String?  @unique // destination/tour review — one per booking
+  destinationId String?
+  eventId       String? // for event reviews
+  rating        Int
+  comment       String
+  image         String?
+  approved      Boolean  @default(false)
+  featured      Boolean  @default(false)
+  demoSeed      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking     Booking?    @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  destination Destination? @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+  event       Event?      @relation(fields: [eventId], references: [id], onDelete: SetNull)
+}
+
+// ── Student services ───────────────────────────────────────────────────────────
+model StudentService {
+  id                     String   @id @default(cuid())
+  userId                 String?
+  package                String // YUSHO_TOUR | WELCOME_TOUR | STAY_WELCOME | COMPLETE
+  fullName               String
+  phone                  String
+  email                  String?
+  arrivalDate            DateTime?
+  arrivalLocation        String? // e.g. "Arba Minch Airport" | "Bus Station"
+  numberOfFamilyMembers  Int      @default(1)
+  hotelRequired          Boolean  @default(false)
+  tourRequired           Boolean  @default(false)
+  registrationAssistance Boolean  @default(false)
+  dormitoryAssistance    Boolean  @default(false)
+  notes                  String?
+  status                 String   @default("PENDING") // PENDING | CONTACTED | IN_PROGRESS | DONE | DECLINED
+  adminResponse          String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+// ── Private / custom tour requests ─────────────────────────────────────────────
+model PrivateTourRequest {
+  id                  String   @id @default(cuid())
+  userId              String?
+  name                String
+  phone               String
+  email               String?
+  numberOfPeople      Int      @default(2)
+  preferredDate       DateTime?
+  destinations        String // JSON array of destination names/slugs
+  transportPreference String?
+  hotelRequired       Boolean  @default(false)
+  foodRequired        Boolean  @default(false)
+  specialRequests     String?
+  budgetRange         String?
+  status              String   @default("PENDING") // PENDING | QUOTED | CONFIRMED | DECLINED
+  quotation           Float?
+  adminResponse       String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+// ── Contact messages ───────────────────────────────────────────────────────────
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    String   @default("NEW") // NEW | READ | HANDLED
+  createdAt DateTime @default(now())
+}
+
+// ── Saved destinations (wishlist) ──────────────────────────────────────────────
+model SavedDestination {
+  id            String   @id @default(cuid())
+  userId        String
+  destinationId String
+  createdAt     DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  destination Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, destinationId])
+}
+
+// ── Gallery (admin-managed public imagery) ─────────────────────────────────────
+model GalleryImage {
+  id         String   @id @default(cuid())
+  imageUrl   String
+  altText    String?
+  caption    String?
+  featured   Boolean  @default(false)
+  uploadedBy String?
+  createdAt  DateTime @default(now())
+}
