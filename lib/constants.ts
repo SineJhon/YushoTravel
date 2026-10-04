@@ -44,23 +44,23 @@ export const FEATURED_EXPERIENCES = [
   {
     id: "chamo",
     title: "Lake Chamo Experience",
-    text: "Glide past hippo pods and the legendary crocodile market on Ethiopia's clearest lake.",
-    image: "/images/seed/lake-chamo-1.webp",
+    text: "Watch dozens of giant crocodiles bask and hippos surface on the Rift's great wildlife lake.",
+    image: "/images/seed/lakechamo.webp",
     href: "/destinations/lake-chamo",
     cta: "Explore Lake Chamo",
   },
   {
     id: "dorze",
     title: "Dorze Cultural Experience",
-    text: "Step into bamboo houses that whisper with age, and watch weavers at work in the highlands.",
-    image: "/images/seed/dorze-1.webp",
+    text: "Wander between bamboo homes that can stand for 80 years and watch master weavers in action.",
+    image: "/images/seed/dorzevillage.webp",
     href: "/destinations/dorze-village",
     cta: "Meet the Dorze",
   },
   {
     id: "waterfall",
     title: "Waterfall Adventure",
-    text: "A short trek through forest to Dorsso's falling water — the perfect shot, the better feeling.",
+    text: "Trek the bamboo-fringed highlands to Dorsso's roaring falls at almost 2,900 m.",
     image: "/images/seed/waterfall-1.webp",
     href: "/destinations/dorsso-waterfall",
     cta: "Chase the water",
@@ -168,7 +168,7 @@ export const STUDENT_SERVICES_LIST = [
 export const STUDENT_DISCLAIMER =
   "Yusho Travel is an independent travel & student-support company. We assist, guide and support families through official university processes — we are not an official university office and cannot act on the university's behalf.";
 
-export const HERO_IMAGE = "/images/seed/hero.webp";
+export const HERO_IMAGE = "/images/seed/bgimage.webp";
 export const APP_NAME = "Yusho Travel";
 export const APP_TAGLINE = "Your Journey Starts Here.";
 export const APP_SUB = "Explore. Experience. Connect.";

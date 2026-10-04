@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { APP_NAME, SITE_URL, APP_TAGLINE } from "@/lib/constants";
 
-const DEFAULT_IMAGE = `${SITE_URL}/images/seed/hero.webp`;
+const DEFAULT_IMAGE = `${SITE_URL}/images/seed/bgimage.webp`;
 
 type SiteMeta = {
   title?: string;

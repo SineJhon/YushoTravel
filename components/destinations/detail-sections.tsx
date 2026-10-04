@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { BadgeCheck, Check, Clock, Users } from "lucide-react";
-import { formatETB } from "@/lib/utils";
+import { BadgeCheck, CalendarClock, Check, Clock, MapPin, Route, Users } from "lucide-react";
+import { formatETB, splitList } from "@/lib/utils";
 import { buttonClass } from "@/components/ui/button";
 
 export type PackageRow = {
@@ -23,6 +23,8 @@ export type DestinationBase = {
   region: string | null;
   category: string;
   mapQuery: string | null;
+  distanceKm?: string | null;
+  travelTime?: string | null;
 };
 
 export function PackagesGrid({ destination, packages }: { destination: DestinationBase; packages: PackageRow[] }) {
@@ -75,6 +77,67 @@ export function PackagesGrid({ destination, packages }: { destination: Destinati
         Prices are per person and include group transport from Arba Minch. Private & family options adjust the rate.
       </p>
     </section>
+  );
+}
+
+export function VisitInfoBlock({
+  distanceKm,
+  travelTime,
+  vicinity,
+  visitInfo,
+}: {
+  distanceKm: string | null;
+  travelTime: string | null;
+  vicinity: string | null;
+  visitInfo: string | null;
+}) {
+  const notes = splitList(visitInfo);
+  const hasFacts = Boolean(distanceKm || travelTime || vicinity);
+  if (!hasFacts && notes.length === 0) return null;
+
+  return (
+    <div className="rounded-2xl border border-teal-700/20 bg-teal-50/50 p-6">
+      <h3 className="flex items-center gap-2 font-display text-lg font-semibold text-ink-900">
+        <CalendarClock size={18} className="text-teal-700" /> Getting there & visit info
+      </h3>
+      {hasFacts && (
+        <dl className="mt-4 grid gap-3 sm:grid-cols-3">
+          {distanceKm && (
+            <div className="rounded-xl bg-white p-3.5 shadow-sm">
+              <dt className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-ink-400">
+                <Route size={14} className="text-teal-700" /> Distance
+              </dt>
+              <dd className="mt-1 text-sm font-semibold text-ink-900">{distanceKm}</dd>
+            </div>
+          )}
+          {travelTime && (
+            <div className="rounded-xl bg-white p-3.5 shadow-sm">
+              <dt className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-ink-400">
+                <Clock size={14} className="text-teal-700" /> Travel time
+              </dt>
+              <dd className="mt-1 text-sm font-semibold text-ink-900">{travelTime}</dd>
+            </div>
+          )}
+          {vicinity && (
+            <div className="rounded-xl bg-white p-3.5 shadow-sm">
+              <dt className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-ink-400">
+                <MapPin size={14} className="text-teal-700" /> Location
+              </dt>
+              <dd className="mt-1 text-sm font-semibold text-ink-900">{vicinity}</dd>
+            </div>
+          )}
+        </dl>
+      )}
+      {notes.length > 0 && (
+        <ul className="mt-4 space-y-2.5">
+          {notes.map((note) => (
+            <li key={note} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-700">
+              <BadgeCheck size={15} className="mt-0.5 shrink-0 text-teal-600" /> {note}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 

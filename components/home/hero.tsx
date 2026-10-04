@@ -3,14 +3,23 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  Compass,
+  MapPin,
+  Route,
+  Users,
+} from "lucide-react";
 import { HERO_IMAGE } from "@/lib/constants";
 import { buttonClass } from "@/components/ui/button";
+import { Avatar } from "@/components/ui/avatar";
+import { StarRating } from "@/components/ui/star-rating";
 
 const stats = [
-  { value: "6", label: "Signature destinations" },
-  { value: "100%", label: "Local-born guides" },
-  { value: "Tour · Event · Student", label: "Three ways to travel with Yusho" },
+  { icon: <MapPin size={17} />, value: "6+", label: "Signature destinations" },
+  { icon: <Compass size={17} />, value: "100%", label: "Local-born guides" },
+  { icon: <Users size={17} />, value: "3 in 1", label: "Tour · Event · Student" },
 ];
 
 export function Hero() {
@@ -51,62 +60,91 @@ export function Hero() {
         />
       </div>
 
-      {/* Deep forest gradient for legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-forest-950/80 via-forest-950/45 to-forest-950/80" aria-hidden />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(6,14,10,0.55)_100%)]" aria-hidden />
+      {/* Cinematic tint — photo stays bright, text stays readable */}
+      <div className="absolute inset-0 bg-gradient-to-br from-forest-950/55 via-forest-950/15 to-forest-950/45" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-r from-forest-950/45 via-forest-900/20 to-transparent" aria-hidden />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(6,14,10,0.28)_100%)]" aria-hidden />
 
-      <div className="container-x relative z-10 pb-24 pt-32">
-        <div className="max-w-3xl">
-          <p className="eyebrow animate-fade-up !text-gold-300" style={{ animationDelay: "120ms" }}>
-            ዙረት · Arba Minch · Southern Ethiopia
+      <div className="container-x relative z-10 pb-24 pt-24 lg:pb-40">
+        <div className="min-w-0 max-w-3xl">
+          {/* Eyebrow pill */}
+          <p
+            className="animate-fade-up inline-flex items-center gap-2.5 rounded-full border border-gold-400/30 bg-forest-950/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-200 backdrop-blur"
+            style={{ animationDelay: "100ms" }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-gold-400" aria-hidden />
+            ዙረት · Arba Minch · Ethiopia
           </p>
-
-          <h1 className="mt-6 animate-fade-up font-display text-5xl font-semibold leading-[1.04] tracking-tight text-white text-balance sm:text-6xl lg:text-[5.25rem]" style={{ animationDelay: "220ms" }}>
+          <h1
+            className="mt-8 animate-fade-up [filter:drop-shadow(0_2px_10px_rgba(6,14,10,0.45))] font-display text-5xl font-semibold leading-[1.04] tracking-tight text-white text-balance sm:text-6xl lg:text-[5.25rem]"
+            style={{ animationDelay: "200ms" }}
+          >
             Your Journey
-            <span className="block text-gold-400">Starts Here.</span>
+            <span className="block bg-gradient-to-r from-gold-200 via-gold-400 to-gold-600 bg-clip-text text-transparent">
+              Starts Here.
+            </span>
           </h1>
 
-          <p className="mt-6 animate-fade-up text-lg font-medium tracking-wide text-sand-100/90 sm:text-xl" style={{ animationDelay: "340ms" }}>
-            Explore. Experience. Connect.
+          <p
+            className="mt-7 animate-fade-up hero-text-shadow inline-flex items-center gap-3 text-lg font-semibold tracking-wide text-sand-50 sm:text-xl"
+            style={{ animationDelay: "320ms" }}
+          >
+            Explore <span className="h-0.5 w-9 bg-gold-400" aria-hidden />
+            Experience <span className="h-0.5 w-9 bg-gold-400" aria-hidden />
+            Connect
           </p>
 
-          {/* Journey path */}
-          <svg className="mt-8 h-10 w-full max-w-md animate-fade-in" viewBox="0 0 400 40" fill="none" aria-hidden style={{ animationDelay: "450ms" }}>
-            <path d="M4 20 C 60 44, 120 -8, 180 18 S 300 42, 396 12" stroke="rgba(230,178,58,0.55)" strokeWidth="2" className="journey-path" />
-            <circle cx="4" cy="20" r="4" fill="#e6b23a" />
-            <circle cx="396" cy="12" r="5" fill="#e6b23a" stroke="#0e1d15" strokeWidth="2" />
-          </svg>
-
-          <div className="mt-9 flex animate-fade-up flex-col gap-3 sm:flex-row" style={{ animationDelay: "560ms" }}>
-            <Link href="/destinations" className={buttonClass("gold", "lg")}>
-              Explore Destinations
+          <div className="mt-10 flex animate-fade-up flex-col gap-3 sm:flex-row" style={{ animationDelay: "430ms" }}>
+            <Link href="/destinations" className={buttonClass("gold", "lg", "shadow-glow-gold")}>
+              Explore Destinations <ArrowRight size={17} />
             </Link>
             <Link
               href="/private-tour"
-              className={buttonClass("ghost", "lg", "border border-white/40 text-white hover:bg-white/10")}
+              className={buttonClass("ghost", "lg", "border border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20")}
             >
-              Plan Your Journey
+              <Route size={17} /> Plan Your Journey
             </Link>
           </div>
 
-          <dl className="mt-14 grid animate-fade-up grid-cols-1 gap-4 border-t border-white/15 pt-7 sm:grid-cols-3" style={{ animationDelay: "680ms" }}>
-            {stats.map((s) => (
-              <div key={s.label} className="pr-4">
-                <dt className="sr-only">{s.label}</dt>
-                <dd className="font-display text-2xl font-semibold text-white">{s.value}</dd>
-                <dd className="mt-0.5 text-[13px] leading-snug text-sand-100/60">{s.label}</dd>
+          {/* Trust row */}
+          <div className="mt-10 flex animate-fade-up items-center gap-4" style={{ animationDelay: "540ms" }}>
+            <div className="flex -space-x-2.5">
+              <Avatar src="/images/seed/avatar-1.webp" name="Yusho traveller" size={36} />
+              <Avatar src="/images/seed/avatar-3.webp" name="Yusho traveller" size={36} />
+              <Avatar src="/images/seed/avatar-5.webp" name="Yusho traveller" size={36} />
+              <Avatar src="/images/seed/avatar-6.webp" name="Yusho traveller" size={36} />
+            </div>
+            <div className="text-left">
+              <div className="flex items-center gap-1.5">
+                <StarRating value={4.9} size={13} showValue={false} />
+                <span className="text-sm font-bold text-white">4.9/5</span>
               </div>
-            ))}
-          </dl>
+              <p className="text-xs leading-snug text-sand-100/75">Loved by 120+ travellers around Arba Minch</p>
+            </div>
+          </div>
         </div>
+
+        {/* Icon stats chips */}
+        <dl className="mt-16 grid animate-fade-up grid-cols-1 gap-3 sm:grid-cols-3" style={{ animationDelay: "680ms" }}>
+          {stats.map((s) => (
+            <div key={s.label} className="flex items-center gap-3 rounded-2xl border border-white/15 bg-forest-950/50 px-4 py-3 backdrop-blur">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gold-400/15 text-gold-300">{s.icon}</span>
+              <div className="min-w-0">
+                <dt className="sr-only">{s.label}</dt>
+                <dd className="font-display text-lg font-semibold leading-none text-white">{s.value}</dd>
+                <dd className="mt-0.5 truncate text-[12px] leading-snug text-sand-100/80">{s.label}</dd>
+              </div>
+            </div>
+          ))}
+        </dl>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-bounce text-white/60">
-        <ChevronDown size={22} />
+      <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 animate-bounce text-white/75">
+        <ChevronDown size={20} />
       </div>
 
-      <div className="absolute bottom-5 right-5 z-10 hidden items-center gap-1.5 rounded-full bg-forest-950/50 px-3 py-1.5 text-[11px] font-medium text-sand-100/80 backdrop-blur lg:flex">
-        <MapPin size={12} className="text-gold-400" /> Southern Ethiopia — the Rift Valley
+      <div className="absolute bottom-5 right-5 z-10 hidden items-center gap-1.5 rounded-full border border-white/20 bg-forest-950/65 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur lg:flex">
+        <MapPin size={12} className="text-gold-400" /> Arba Minch Ethiopia
       </div>
     </section>
   );

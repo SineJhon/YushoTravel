@@ -1,4 +1,4 @@
-import { BadgeCheck, Check, ListChecks, LocateFixed, MapPin, Mountain, Users, X } from "lucide-react";
+import { BadgeCheck, Check, Clock, ListChecks, LocateFixed, MapPin, Mountain, Route, Users, X } from "lucide-react";
 import { formatETB } from "@/lib/utils";
 import type { DestinationBase } from "./detail-sections";
 
@@ -81,6 +81,12 @@ export function QuickFacts({ destination }: { destination: DestinationBase }) {
     { icon: <MapPin size={16} />, label: "Category", value: destination.category },
     { icon: <MapPin size={16} />, label: "Region", value: destination.region ?? destination.location },
     { icon: <Users size={16} />, label: "From", value: formatETB(destination.basePrice) },
+    ...(destination.distanceKm
+      ? [{ icon: <Route size={16} />, label: "Distance", value: destination.distanceKm }]
+      : []),
+    ...(destination.travelTime
+      ? [{ icon: <Clock size={16} />, label: "Travel time", value: destination.travelTime }]
+      : []),
   ];
   return (
     <div>

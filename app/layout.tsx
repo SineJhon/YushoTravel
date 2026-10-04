@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     description: `${APP_SUB} Tours, events and student services in Arba Minch, southern Ethiopia.`,
     url: SITE_URL,
     siteName: APP_NAME,
-    images: [`${SITE_URL}/images/seed/hero.webp`],
+    images: [`${SITE_URL}/images/seed/bgimage.webp`],
     locale: "en_US",
     type: "website",
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${APP_NAME} — ${APP_TAGLINE}`,
     description: `${APP_SUB} Tours, events and student services in Arba Minch.`,
-    images: [`${SITE_URL}/images/seed/hero.webp`],
+    images: [`${SITE_URL}/images/seed/bgimage.webp`],
   },
   icons: {
     icon: "/favicon.svg",

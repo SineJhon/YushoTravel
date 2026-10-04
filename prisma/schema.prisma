@@ -48,6 +48,10 @@ model Destination {
   description  String
   location     String
   region       String? // filter group, e.g. "Arba Minch", "Lake", "Highlands"
+  distanceKm   String? // display "4.6 km" — shown on cards
+  travelTime   String? // display "~12 min by car"
+  vicinity     String? // "In the city" | "Outside the city"
+  visitInfo    String? // "|"-separated visit notes for the detail page
   duration     String // display string, e.g. "Full day"
   durationHours Float? // numeric duration for filtering & sorting
   basePrice    Float // starting price in ETB

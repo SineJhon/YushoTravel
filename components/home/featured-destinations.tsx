@@ -16,7 +16,7 @@ export function FeaturedDestinations({ destinations }: { destinations: Destinati
             align="left"
             eyebrow="Discover"
             title="Featured destinations"
-            description="Six signature places around Arba Minch — each one loaded from our destination database, always fresh."
+            description="A growing collection of signature places around Arba Minch — each one loaded from our destination database, always fresh."
           />
           <Reveal>
             <Link href="/destinations" className={buttonClass("dark", "md")}>

@@ -237,6 +237,14 @@
   background: linear-gradient(to right, var(--color-gold-400), transparent);
 }
 
+/* Dark halo behind hero text for legibility over bright imagery */
+.hero-text-shadow {
+  text-shadow:
+    0 1px 1px rgba(14, 29, 21, 0.75),
+    0 2px 8px rgba(14, 29, 21, 0.55),
+    0 0 24px rgba(14, 29, 21, 0.4);
+}
+
 @media print {
   header, footer { display: none; }
 }

@@ -11,7 +11,7 @@ import { SITE_URL } from "@/lib/constants";
 import { JsonLd } from "@/components/ui/jsonld";
 import { DestinationGallery } from "@/components/destinations/destination-gallery";
 import { BookingCard } from "@/components/destinations/booking-card";
-import { PackagesGrid, FactList } from "@/components/destinations/detail-sections";
+import { PackagesGrid, FactList, VisitInfoBlock } from "@/components/destinations/detail-sections";
 import { IncludesTable, MeetingInfoBlock, MapEmbed } from "@/components/destinations/detail-side";
 import { ReviewList } from "@/components/destinations/review-list";
 import { DestinationCardView } from "@/components/destinations/destination-card";
@@ -119,6 +119,14 @@ export default async function DestinationDetailPage({ params }: { params: Promis
               <IncludesTable included={included} excluded={excluded} />
             </Reveal>
 
+<Reveal className="mt-5">
+              <VisitInfoBlock
+                distanceKm={destination.distanceKm}
+                travelTime={destination.travelTime}
+                vicinity={destination.vicinity}
+                visitInfo={destination.visitInfo}
+              />
+            </Reveal>
             <Reveal className="mt-5">
               <MeetingInfoBlock meetingInfo={destination.meetingInfo} requirements={destination.requirements} />
             </Reveal>

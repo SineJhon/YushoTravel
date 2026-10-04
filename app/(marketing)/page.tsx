@@ -25,7 +25,7 @@ export default async function HomePage() {
     name: APP_NAME,
     url: SITE_URL,
     description:
-      "Travel, tour, events and student-experience company based in Arba Minch, southern Ethiopia.",
+      "Travel, tour, events and student-experience company based in Arba Minch, Ethiopia.",
     areaServed: { "@type": "City", name: CONTACT_CITY },
     priceRange: "ETB 0 – 25,000",
   };
