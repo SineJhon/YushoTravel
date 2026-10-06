@@ -7,15 +7,14 @@ import { HomeEvents } from "@/components/home/home-events";
 import { Testimonials } from "@/components/home/testimonials";
 import { FinalCta } from "@/components/home/final-cta";
 import { JsonLd } from "@/components/ui/jsonld";
-import { getFeaturedDestinations, getUpcomingEvents, getFeaturedReviews } from "@/lib/data";
+import { getFeaturedDestinations, getFeaturedReviews } from "@/lib/data";
 import { APP_NAME, CONTACT_CITY, SITE_URL } from "@/lib/constants";
 
-export const revalidate = 300; // 5 minutes — fresh destinations/events without sacrificing speed
+export const revalidate = 300; // 5 minutes — fresh destinations without sacrificing speed
 
 export default async function HomePage() {
-  const [destinations, events, reviews] = await Promise.all([
+  const [destinations, reviews] = await Promise.all([
     getFeaturedDestinations(6),
-    getUpcomingEvents(3),
     getFeaturedReviews(6),
   ]);
 
@@ -38,7 +37,7 @@ export default async function HomePage() {
       <WhyYusho />
       <StudentWelcome />
       <FeaturedExperiences />
-      <HomeEvents events={events} />
+      <HomeEvents />
       <Testimonials reviews={reviews} />
       <FinalCta />
     </>

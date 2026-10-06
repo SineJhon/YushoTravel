@@ -46,6 +46,43 @@ async function main() {
   });
   console.log(`✓ Users ready — admin: ${adminEmail} | demo: ${DEMO_EMAIL}`);
 
+  // ── Real customer accounts (featured on the reviews section) ────────────────
+  const seedUserPassword = await bcrypt.hash(DEMO_PASSWORD, 12);
+  const ribqa = await prisma.user.upsert({
+    where: { email: "ribqa.temam@example.com" },
+    update: { name: "Ribqa Temam", profileImage: img("ribqatemam") },
+    create: {
+      name: "Ribqa Temam",
+      email: "ribqa.temam@example.com",
+      passwordHash: seedUserPassword,
+      role: "USER",
+      profileImage: img("ribqatemam"),
+    },
+  });
+  const pastor = await prisma.user.upsert({
+    where: { email: "pastor.beyene@example.com" },
+    update: { name: "Pastor Beyene", profileImage: img("pastorbeyene") },
+    create: {
+      name: "Pastor Beyene",
+      email: "pastor.beyene@example.com",
+      passwordHash: seedUserPassword,
+      role: "USER",
+      profileImage: img("pastorbeyene"),
+    },
+  });
+  const yonas = await prisma.user.upsert({
+    where: { email: "yonas.agusha@example.com" },
+    update: { name: "Yonas Agusha", profileImage: img("yonasagusha") },
+    create: {
+      name: "Yonas Agusha",
+      email: "yonas.agusha@example.com",
+      passwordHash: seedUserPassword,
+      role: "USER",
+      profileImage: img("yonasagusha"),
+    },
+  });
+  console.log("✓ 3 real customer accounts ready (Ribqa, Pastor, Yonas)");
+
   // ── Destinations + packages ────────────────────────────────────────────────
   const destByName = new Map<string, { id: string; name: string; slug: string }>();
 
@@ -105,7 +142,7 @@ async function main() {
     where: { destinationId: dorze.id, name: "Group Cultural Day" },
   });
 
-  const completedBooking = await prisma.booking.create({
+  await prisma.booking.create({
     data: {
       bookingRef: "YS-DEMO-001",
       userId: demo.id,
@@ -179,42 +216,41 @@ async function main() {
     },
   });
 
-  // ── Sample reviews (clearly flagged demoSeed) ─────────────────────────────
+  // ── Featured reviews from real customers ─────────────────────────────────────
   await prisma.review.createMany({
     data: [
       {
-        userId: demo.id,
-        bookingId: completedBooking.id,
-        destinationId: forty.id,
-        rating: 5,
-        comment:
-          "[Demo review] Forty Springs at dawn is unreal — swimming in those blue pools with birds everywhere. Our guide grew up nearby and knew every path.",
-        approved: true,
-        featured: true,
-        demoSeed: true,
-        createdAt: daysFromNow(-14),
-      },
-      {
-        userId: demo.id,
-        destinationId: chamo.id,
-        rating: 5,
-        comment:
-          "[Demo review] The private boat safari was the highlight of our trip. Hippos closer than we imagined, and the crocodile market is like nothing else in the country.",
-        approved: true,
-        featured: true,
-        demoSeed: true,
-        createdAt: daysFromNow(-12),
-      },
-      {
-        userId: demo.id,
+        userId: ribqa.id,
         destinationId: dorze.id,
         rating: 5,
         comment:
-          "[Demo review] Dorze stole our hearts. Weaving lessons, enset bread, and the most welcoming village meal of the whole journey.",
+          "I came along for the YO Masqala event — a trip for Masqala, Dorsso and Dorze with a great group of people. The food, the hikes and the company were all brilliant, and I went home with new friends and unforgettable photos.",
         approved: true,
         featured: true,
         demoSeed: true,
-        createdAt: daysFromNow(-10),
+        createdAt: daysFromNow(-45),
+      },
+      {
+        userId: pastor.id,
+        destinationId: dorze.id,
+        rating: 5,
+        comment:
+          "We came to Dorze Village as a family — my wife, our son and me — and we loved it. We even had time to sit with the king and learn about the village. A truly special day that we'll never forget.",
+        approved: true,
+        featured: true,
+        demoSeed: true,
+        createdAt: daysFromNow(-38),
+      },
+      {
+        userId: yonas.id,
+        destinationId: forty.id,
+        rating: 5,
+        comment:
+          "I travelled with my wife, her mother, her other son and our three kids — seven of us in total. Over three days we visited all six destinations, and we loved every single one. Yusho took care of everything for us.",
+        approved: true,
+        featured: true,
+        demoSeed: true,
+        createdAt: daysFromNow(-27),
       },
     ],
   });
@@ -264,7 +300,7 @@ async function main() {
     },
   });
 
-  console.log("✓ Demo bookings, reviews, saved destinations & requests seeded");
+  console.log("✓ Demo bookings, saved destinations & requests seeded");
   console.log("");
   console.log("Seed complete:");
   console.log(`  Admin dashboard → ${adminEmail} / ${adminPassword}`);

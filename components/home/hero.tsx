@@ -109,10 +109,9 @@ export function Hero() {
           {/* Trust row */}
           <div className="mt-10 flex animate-fade-up items-center gap-4" style={{ animationDelay: "540ms" }}>
             <div className="flex -space-x-2.5">
-              <Avatar src="/images/seed/P1.webp" name="Yusho traveller" size={36} />
-              <Avatar src="/images/seed/P2.webp" name="Yusho traveller" size={36} />
-              <Avatar src="/images/seed/P3.webp" name="Yusho traveller" size={36} />
-              <Avatar src="/images/seed/P4.webp" name="Yusho traveller" size={36} />
+              <Avatar src="/images/seed/ribqatemam.webp" name="Ribqa Temam" size={36} />
+              <Avatar src="/images/seed/pastorbeyene.webp" name="Pastor Beyene" size={36} />
+              <Avatar src="/images/seed/yonasagusha.webp" name="Yonas Agusha" size={36} />
             </div>
             <div className="text-left">
               <div className="flex items-center gap-1.5">

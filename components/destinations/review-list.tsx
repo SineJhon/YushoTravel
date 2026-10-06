@@ -30,12 +30,7 @@ export function ReviewList({ reviews }: { reviews: DetailReview[] }) {
           <Avatar src={review.user.profileImage} name={review.user.name} size={42} />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="font-semibold text-ink-900">
-                {review.user.name}
-                {review.demoSeed && (
-                  <span className="ml-2 rounded-full bg-gold-100 px-2 py-0.5 text-[10px] font-semibold text-gold-800">seed</span>
-                )}
-              </p>
+              <p className="font-semibold text-ink-900">{review.user.name}</p>
               <span className="text-xs text-ink-400">{formatDate(review.createdAt)}</span>
             </div>
             <StarRating value={review.rating} size={14} showValue={false} className="mt-1" />
