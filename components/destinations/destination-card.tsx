@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowUpRight, Clock, MapPin, Route, Star } from "lucide-react";
 import type { DestinationCard } from "@/lib/data";
 import { LazyImage } from "@/components/ui/lazy-image";
-import { formatETB } from "@/lib/utils";
 import { imgSizes } from "@/lib/images";
 
 export function DestinationCardView({ destination }: { destination: DestinationCard }) {
@@ -54,7 +53,7 @@ export function DestinationCardView({ destination }: { destination: DestinationC
               <p className="flex items-center gap-2 text-[13px] text-ink-600">
                 <Route size={14} className="shrink-0 text-teal-700" />
                 <span className="font-semibold text-ink-800">{destination.distanceKm}</span>
-                <span className="text-ink-400">from Arba Minch</span>
+                <span className="text-ink-400">from the center of Arba Minch</span>
               </p>
             )}
             {destination.travelTime && (
@@ -74,12 +73,10 @@ export function DestinationCardView({ destination }: { destination: DestinationC
 
         <div className="flex-1" />
         <div className="mt-4 flex items-center justify-between border-t border-ink-200/40 pt-4">
-          <div className="flex items-center gap-3 text-[13px] text-ink-500">
+          <div className="flex items-center text-[13px] text-ink-500">
             <span className="inline-flex items-center gap-1">
               <Clock size={13} className="text-teal-700" /> {destination.duration}
             </span>
-            <span className="text-ink-200">·</span>
-            <span className="font-semibold text-teal-800">{formatETB(destination.basePrice)}</span>
           </div>
           <span className="relative z-20 inline-flex h-9 w-9 items-center justify-center rounded-full bg-forest-800 text-white transition-all group-hover:bg-gold-400 group-hover:text-forest-950">
             <ArrowUpRight size={16} />

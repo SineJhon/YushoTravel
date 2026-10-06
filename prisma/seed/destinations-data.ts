@@ -53,8 +53,8 @@ export const destinationsData: DestinationSeed[] = [
     vicinity: "In the city",
     visitInfo:
       "Available in the city|Free to go at any time before 10:00 LT for the great experience|Covered within a half day",
-    duration: "Full day",
-    durationHours: 8,
+    duration: "Half to full day",
+    durationHours: 6,
     basePrice: 1200,
     category: "Nature",
     highlights:
