@@ -21,8 +21,8 @@ export function StudentWelcome() {
           <div className="relative">
             <div className="absolute -inset-4 -z-0 rounded-[2rem] bg-teal-500/15 blur-2xl" aria-hidden />
             <LazyImage
-              src="/images/seed/event-students-2.webp"
-              alt="Students arriving at Arba Minch University"
+              src="/images/seed/amu.webp"
+              alt="Arba Minch University"
               boxClass="aspect-[4/3] rounded-[1.75rem] shadow-pop"
               sizes="(max-width: 1024px) 100vw, 52vw"
             />
