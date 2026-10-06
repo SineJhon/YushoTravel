@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CalendarDays, MapPin, ShieldCheck, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
+import { Logo } from "@/components/ui/logo";
 import type { HeaderUser } from "./site-header-client";
 
 export function MobileDrawer({
@@ -31,8 +32,11 @@ export function MobileDrawer({
       aria-hidden={!open}
     >
       <div className="container-x flex items-center justify-between py-5">
-        <span className="font-display text-xl font-bold">
-          Yusho<span className="text-gold-400"> Travel</span>
+        <span className="flex items-center gap-2.5">
+          <Logo className="size-10" />
+          <span className="font-display text-xl font-bold">
+            Yusho<span className="text-gold-400"> Travel</span>
+          </span>
         </span>
         <button
           onClick={onClose}

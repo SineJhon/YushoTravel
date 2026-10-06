@@ -20,7 +20,7 @@ export function PrivateTourForm({
   selected: string[];
   onToggleDestination: (id: string) => void;
 }) {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", preferredDate: "", preferredEndDate: "", transportPreference: "", budgetRange: "", specialRequests: "", hotelRequired: false, foodRequired: false });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", numberOfPeople: "2", preferredDate: "", preferredEndDate: "", transportPreference: "", budgetRange: "", specialRequests: "", hotelRequired: false, foodRequired: false });
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
@@ -31,11 +31,15 @@ export function PrivateTourForm({
     e.preventDefault();
     setError(null);
     if (selected.length === 0) return setError("Pick at least one destination.");
+    const people = Number(form.numberOfPeople);
+    if (!Number.isInteger(people) || people < 1 || people > 40) {
+      return setError("Tell us how many people will travel (1–40).");
+    }
     if (form.preferredDate && form.preferredEndDate && form.preferredEndDate < form.preferredDate) {
       return setError("The return date can't be before the start date.");
     }
     setBusy(true);
-    const res = await createPrivateTourAction({ ...form, numberOfPeople: 2, destinationIds: selected });
+    const res = await createPrivateTourAction({ ...form, destinationIds: selected });
     setBusy(false);
     if (!res.ok) return setError(res.error);
     toast.success("Request sent — we'll reply with a quotation.");
@@ -70,14 +74,15 @@ export function PrivateTourForm({
         <Field label="Travelling to" optional>
           <Input type="date" value={form.preferredEndDate} onChange={(e) => set("preferredEndDate", e.target.value)} min={form.preferredDate || undefined} />
         </Field>
-        <div className="sm:col-span-2">
-          <Field label="Budget range">
-            <Select value={form.budgetRange} onChange={(e) => set("budgetRange", e.target.value)}>
-              <option value="">Choose a rough range…</option>
-              {BUDGET_RANGES.map((r) => <option key={r} value={r}>{r}</option>)}
-            </Select>
-          </Field>
-        </div>
+        <Field label="Number of travellers">
+          <Input type="number" min={1} max={40} value={form.numberOfPeople} onChange={(e) => set("numberOfPeople", e.target.value)} />
+        </Field>
+        <Field label="Budget range">
+          <Select value={form.budgetRange} onChange={(e) => set("budgetRange", e.target.value)}>
+            <option value="">Choose a rough range…</option>
+            {BUDGET_RANGES.map((r) => <option key={r} value={r}>{r}</option>)}
+          </Select>
+        </Field>
       </div>
 
       <div className="mt-5">

@@ -51,7 +51,11 @@ export const metadata: Metadata = {
     images: [`${SITE_URL}/images/seed/bgimage.webp`],
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "64x64" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
 

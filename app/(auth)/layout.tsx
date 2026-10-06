@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Image as ImageIcon } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -9,9 +10,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
       <div className="relative z-10 w-full max-w-md">
         <Link href="/" className="mx-auto flex w-fit flex-col items-center gap-1">
-          <span className="flex size-12 items-center justify-center rounded-2xl bg-gold-400 font-display text-2xl font-bold text-forest-950">
-            Y
-          </span>
+          <Logo className="size-16 rounded-2xl" />
           <span className="font-display text-xl font-bold text-white">
             Yusho<span className="text-gold-400"> Travel</span>
           </span>

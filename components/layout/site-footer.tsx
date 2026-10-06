@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import { APP_NAME, AMHARIC_WORD, CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_2, CONTACT_PHONE_2_TEL, CONTACT_PHONE_TEL } from "@/lib/constants";
 import { InstagramIcon, TelegramIcon, TikTokIcon } from "@/components/ui/brand-icons";
+import { Logo } from "@/components/ui/logo";
 
 const destinationLinks = [
   { label: "Forty Springs", href: "/destinations/forty-springs" },
@@ -29,9 +30,12 @@ export function SiteFooter() {
     <footer className="mt-auto bg-forest-950 text-sand-50 grain">
       <div className="container-x grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-display text-2xl font-bold">
-            Yusho<span className="text-gold-400"> Travel</span>
-          </p>
+          <div className="flex items-center gap-3">
+            <Logo className="size-12" />
+            <p className="font-display text-2xl font-bold leading-none">
+              Yusho<span className="text-gold-400"> Travel</span>
+            </p>
+          </div>
           <p className="mt-1 text-xs font-medium uppercase tracking-[0.28em] text-teal-300">
             {AMHARIC_WORD} · journey
           </p>

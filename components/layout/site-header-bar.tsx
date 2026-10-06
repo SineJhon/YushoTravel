@@ -5,6 +5,7 @@ import { ChevronDown, Compass, Heart, LayoutDashboard, LogOut, Menu, User as Use
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 import { Avatar } from "@/components/ui/avatar";
+import { Logo } from "@/components/ui/logo";
 import type { HeaderUser } from "./site-header-client";
 
 export function SiteHeaderBar({
@@ -26,8 +27,8 @@ export function SiteHeaderBar({
       )}
     >
       <div className="container-x flex items-center justify-between">
-        <Link href="/" className="relative z-10 flex items-center gap-2" aria-label="Yusho Travel home">
-          <span className={cn("flex size-9 items-center justify-center rounded-xl font-display text-lg font-bold", transparent ? "bg-gold-400 text-forest-950" : "bg-forest-900 text-gold-400")}>Y</span>
+        <Link href="/" className="relative z-10 flex items-center gap-2.5" aria-label="Yusho Travel home">
+          <Logo className="size-9" />
           <span className="leading-tight">
             <span className={cn("block font-display text-lg font-bold tracking-tight", transparent ? "text-white" : "text-forest-950")}>Yusho Travel</span>
             <span className={cn("block text-[10px] font-medium uppercase tracking-[0.28em]", transparent ? "text-sand-100/70" : "text-teal-700")}>ዙረት · journey</span>
