@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Clock3, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { siteMeta } from "@/lib/seo";
 import { ContactForm } from "@/components/requests/contact-form";
 import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_2, CONTACT_PHONE_2_TEL, CONTACT_PHONE_TEL } from "@/lib/constants";
@@ -31,7 +31,6 @@ const info: InfoItem[] = [
     ],
   },
   { icon: <Mail size={18} />, label: "Email", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: <Clock3 size={18} />, label: "Office hours", value: "Mon–Sat · 8:30 AM – 6:30 PM" },
 ];
 
 export default function ContactPage() {
@@ -74,16 +73,6 @@ export default function ContactPage() {
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="overflow-hidden rounded-3xl border border-ink-200/40 shadow-card">
-              <iframe
-                title="Map — Yusho Travel, Arba Minch"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=37.53%2C6.02%2C37.60%2C6.08&layer=mapnik&marker=6.0311%2C37.5666"
-                className="h-64 w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
             </div>
           </div>
         </div>
