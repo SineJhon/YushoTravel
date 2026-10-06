@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { siteMeta } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/skeleton";
-import { REQUEST_STATUS, STUDENT_PACKAGES } from "@/lib/constants";
+import { REQUEST_STATUS, studentPackageName } from "@/lib/constants";
 import { formatDate, formatDateTime, formatETB, parseJson } from "@/lib/utils";
 
 export const metadata: Metadata = siteMeta({
@@ -45,18 +45,22 @@ export default async function RequestsPage() {
               <h3 className="font-display text-lg font-semibold text-ink-900">Student services</h3>
               <div className="mt-3 space-y-3">
                 {studentServices.map((req) => {
-                  const pkg = STUDENT_PACKAGES.find((p) => p.id === req.package);
                   const status = REQUEST_STATUS[req.status] ?? { label: req.status, tone: "slate" as const };
                   return (
                     <article key={req.id} className="rounded-card border border-ink-200/40 bg-white p-5 shadow-card">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <p className="font-semibold text-ink-900">{pkg?.shortName ?? req.package}</p>
+                        <p className="font-semibold text-ink-900">{studentPackageName(req.package)}</p>
                         <Badge tone={status.tone} dot>{status.label}</Badge>
                       </div>
                       <p className="mt-1 text-sm text-ink-500">
                         {req.fullName} · {req.phone} · Arriving {req.arrivalDate ? formatDate(req.arrivalDate) : "—"}
                         {req.arrivalLocation ? ` at ${req.arrivalLocation}` : ""}
                       </p>
+                      {(req.arrivingFrom || req.goingTo || req.departureDate) && (
+                        <p className="mt-0.5 text-xs text-ink-400">
+                          {req.arrivingFrom ? `From ${req.arrivingFrom}` : ""}{req.goingTo ? ` · To ${req.goingTo}` : ""}{req.departureDate ? ` · Going back ${formatDate(req.departureDate)}` : ""}
+                        </p>
+                      )}
                       <p className="mt-0.5 text-xs text-ink-400">Requested {formatDateTime(req.createdAt)}</p>
                       {req.adminResponse && (
                         <div className="mt-3 rounded-xl bg-teal-50 p-3 text-sm text-teal-900">

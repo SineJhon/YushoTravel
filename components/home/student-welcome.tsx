@@ -24,6 +24,7 @@ export function StudentWelcome() {
               src="/images/seed/amu.webp"
               alt="Arba Minch University"
               boxClass="aspect-[4/3] rounded-[1.75rem] shadow-pop"
+              fill
               sizes="(max-width: 1024px) 100vw, 52vw"
             />
             <div className="absolute -bottom-6 -right-4 flex items-center gap-3 rounded-2xl bg-gold-400 px-5 py-4 text-forest-950 shadow-pop sm:-right-6 animate-float">

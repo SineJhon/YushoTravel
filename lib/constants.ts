@@ -85,9 +85,28 @@ export const FEATURED_EXPERIENCES = [
 
 export const STUDENT_PACKAGES = [
   {
-    id: "YUSHO_TOUR",
-    name: "Package 1 — Yusho Tour",
-    shortName: "Yusho Tour",
+    id: "YUSHO_STAY",
+    name: "Yusho Stay",
+    shortName: "Yusho Stay",
+    tagline: "Arrival comfort, accommodation handled",
+    price: "From ETB 7,500",
+    features: [
+      "Meet & receive at airport or bus station",
+      "Transportation assistance into town",
+      "Hotel / accommodation arrangement & check-in",
+      "Verified, student-friendly stays",
+      "24/7 phone support during your stay",
+      "Dormitory-process guidance & reaching your room",
+      "Registration-process assistance",
+      "University orientation & campus navigation",
+    ],
+    image: "/images/seed/room.webp",
+    popular: false,
+  },
+  {
+    id: "YUSHO_TRAVEL",
+    name: "Yusho Travel",
+    shortName: "Yusho Travel",
     tagline: "Private destination tour for the student and family",
     price: "From ETB 3,500",
     features: [
@@ -96,49 +115,22 @@ export const STUDENT_PACKAGES = [
       "Park, boat & guide fees included",
       "Flexible timing around your schedule",
       "Perfect for family days out",
+      "Pick-up & drop-off anywhere in Arba Minch",
+      "Local guide who speaks Amharic & English",
+      "Photo & rest stops whenever you like",
+      "Combine two destinations in one day",
     ],
-    image: "/images/seed/forty-springs-1.webp",
+    image: "/images/seed/lakechamo.webp",
     popular: false,
   },
   {
-    id: "WELCOME_TOUR",
-    name: "Package 2 — Yusho Welcome + Tour",
-    shortName: "Yusho Welcome + Tour",
-    tagline: "Receive, get settled, then explore",
-    price: "From ETB 5,500",
-    features: [
-      "Meet & receive at airport or bus station",
-      "Transportation assistance into town",
-      "Luggage handling & guidance",
-      "A destination tour (4–6 hours)",
-      "Local phone / sim & map guidance",
-    ],
-    image: "/images/seed/travel-1.webp",
-    popular: true,
-  },
-  {
-    id: "STAY_WELCOME",
-    name: "Package 3 — Yusho Stay + Welcome",
-    shortName: "Yusho Stay + Welcome",
-    tagline: "Arrival comfort, accommodation handled",
-    price: "From ETB 7,500",
-    features: [
-      "Everything in Welcome + Tour",
-      "Hotel / accommodation arrangement",
-      "Accommodation assistance & check-in help",
-      "Verified, student-friendly stays",
-      "24/7 phone support during your stay",
-    ],
-    image: "/images/seed/dorze-3.webp",
-    popular: false,
-  },
-  {
-    id: "COMPLETE",
-    name: "Package 4 — Yusho Complete",
+    id: "YUSHO_COMPLETE",
+    name: "Yusho Complete",
     shortName: "Yusho Complete",
     tagline: "Full arrival-to-dorm support",
     price: "From ETB 12,000",
     features: [
+      "Everything in Yusho Stay + Yusho Travel",
       "Arrival → Receiving",
       "Hotel arrangement before settling",
       "Registration-process assistance",
@@ -147,10 +139,24 @@ export const STUDENT_PACKAGES = [
       "Basic orientation walks",
       "Optional family tour to end the week",
     ],
-    image: "/images/seed/event-students-2.webp",
+    image: "/images/seed/yushocomplete.webp",
     popular: true,
   },
 ] as const;
+
+// Display names for requests saved with the old package ids, so they still read nicely.
+export const STUDENT_PACKAGE_LEGACY_NAMES: Record<string, string> = {
+  YUSHO_TOUR: "Yusho Tour",
+  WELCOME_TOUR: "Yusho Welcome + Tour",
+  STAY_WELCOME: "Yusho Stay + Welcome",
+  COMPLETE: "Yusho Complete",
+};
+
+export function studentPackageName(id: string): string {
+  const pkg = STUDENT_PACKAGES.find((p) => p.id === id);
+  if (pkg) return pkg.shortName;
+  return STUDENT_PACKAGE_LEGACY_NAMES[id] ?? id;
+}
 
 export const STUDENT_SERVICES_LIST = [
   "Receiving students at arrival",

@@ -206,6 +206,9 @@ model StudentService {
   email                  String?
   arrivalDate            DateTime?
   arrivalLocation        String? // e.g. "Arba Minch Airport" | "Bus Station"
+  arrivingFrom           String? // origin — e.g. "Addis Ababa · flight ET 122"
+  goingTo                String? // drop-off — e.g. "Hotel" | "Dormitory" | "Campus"
+  departureDate          DateTime? // when the student heads back ("going")
   numberOfFamilyMembers  Int      @default(1)
   hotelRequired          Boolean  @default(false)
   tourRequired           Boolean  @default(false)

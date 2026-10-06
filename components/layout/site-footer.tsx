@@ -110,9 +110,6 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col items-center justify-between gap-2 py-5 text-xs text-sand-100/50 sm:flex-row">
           <p>© {year} {APP_NAME}. Made with care in Arba Minch, Ethiopia.</p>
-          <p className="max-w-md text-center sm:text-right">
-            {APP_NAME} is an independent travel & student-support company — not an official university office.
-          </p>
         </div>
       </div>
     </footer>

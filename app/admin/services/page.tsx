@@ -4,7 +4,7 @@ import { getAdminStudentServices, getAdminPrivateTours } from "@/lib/data-admin"
 import { siteMeta } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { StudentRequestAction, PrivateRequestAction } from "@/components/admin/request-actions";
-import { STUDENT_PACKAGES, REQUEST_STATUS } from "@/lib/constants";
+import { REQUEST_STATUS, studentPackageName } from "@/lib/constants";
 import { formatDate, formatDateTime, formatETB, parseJson, cn } from "@/lib/utils";
 
 export const metadata: Metadata = siteMeta({ title: "Services & requests", description: "Manage student services and private tour requests.", path: "/admin/services", noindex: true });
@@ -35,20 +35,24 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
       <div className="mt-6 space-y-4">
         {tab === "student" &&
           students.map((req) => {
-            const pkg = STUDENT_PACKAGES.find((p) => p.id === req.package);
             const status = REQUEST_STATUS[req.status] ?? { label: req.status, tone: "slate" as const };
             return (
               <article key={req.id} className="rounded-card border border-ink-200/40 bg-white p-5 shadow-card">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <p className="font-display font-semibold text-ink-900">{req.fullName}</p>
-                    <p className="text-sm text-ink-500">{req.phone} · {req.email ?? "no email"} · {pkg?.shortName ?? req.package}</p>
+                    <p className="text-sm text-ink-500">{req.phone} · {req.email ?? "no email"} · {studentPackageName(req.package)}</p>
                   </div>
                   <Badge tone={status.tone} dot>{status.label}</Badge>
                 </div>
                 <p className="mt-3 text-sm text-ink-700">
                   Arrival: <b>{req.arrivalDate ? formatDate(req.arrivalDate) : "—"}</b> · {req.arrivalLocation ?? "location TBA"} · family {req.numberOfFamilyMembers} · requested {formatDateTime(req.createdAt)}
                 </p>
+                {(req.arrivingFrom || req.goingTo || req.departureDate) && (
+                  <p className="mt-1 text-sm text-ink-700">
+                    From: <b>{req.arrivingFrom || "—"}</b> → To: <b>{req.goingTo || "—"}</b> · Going back: {req.departureDate ? formatDate(req.departureDate) : "—"}
+                  </p>
+                )}
                 <p className="text-sm text-ink-700">
                   Needs: {[req.hotelRequired && "Hotel", req.tourRequired && "Tour", req.registrationAssistance && "Registration help", req.dormitoryAssistance && "Dormitory help"].filter(Boolean).join(", ") || "—"}
                 </p>

@@ -22,7 +22,7 @@ export async function testRequests(demo, regEmail, ids) {
   check("private tour without destination rejected", r.result?.ok === false, r.result?.error ?? "");
 
   r = await call(A.studentService, {
-    package: "WELCOME_TOUR", fullName: "Smoke Tester", phone: "+251911111111", email: regEmail,
+    package: "YUSHO_STAY", fullName: "Smoke Tester", phone: "+251911111111", email: regEmail,
     arrivalDate: futureDate(20), arrivalLocation: "Arba Minch Airport", numberOfFamilyMembers: 2,
     hotelRequired: true, tourRequired: true, registrationAssistance: false, dormitoryAssistance: false, notes: "smoke",
   }, demo);

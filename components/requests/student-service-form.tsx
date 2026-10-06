@@ -15,8 +15,11 @@ export function StudentServiceForm({ initialPackage }: { initialPackage: string 
     fullName: "",
     phone: "",
     email: "",
+    arrivingFrom: "",
     arrivalDate: "",
     arrivalLocation: "",
+    goingTo: "",
+    departureDate: "",
     numberOfFamilyMembers: "1",
     hotelRequired: false,
     tourRequired: false,
@@ -84,18 +87,39 @@ export function StudentServiceForm({ initialPackage }: { initialPackage: string 
             <Input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} />
           </Field>
         </div>
-        <Field label="Arrival date">
-          <Input type="date" value={form.arrivalDate} onChange={(e) => set("arrivalDate", e.target.value)} />
-        </Field>
-        <Field label="Arriving at">
-          <Select value={form.arrivalLocation} onChange={(e) => set("arrivalLocation", e.target.value)}>
-            <option value="">Choose…</option>
-            {ARRIVAL_LOCATIONS.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
-          </Select>
-        </Field>
         <Field label="Number of family members travelling">
           <Input type="number" min={0} max={30} value={form.numberOfFamilyMembers} onChange={(e) => set("numberOfFamilyMembers", e.target.value)} />
         </Field>
+      </div>
+
+      <div>
+        <p className="mb-2 text-[13px] font-semibold text-ink-700">✈️ From — Arrival</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Arriving from" optional>
+            <Input value={form.arrivingFrom} onChange={(e) => set("arrivingFrom", e.target.value)} placeholder="City, flight or bus — e.g. Addis Ababa, ET 122" />
+          </Field>
+          <Field label="Arrival date">
+            <Input type="date" value={form.arrivalDate} onChange={(e) => set("arrivalDate", e.target.value)} />
+          </Field>
+          <Field label="Arriving at">
+            <Select value={form.arrivalLocation} onChange={(e) => set("arrivalLocation", e.target.value)}>
+              <option value="">Choose…</option>
+              {ARRIVAL_LOCATIONS.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
+            </Select>
+          </Field>
+        </div>
+      </div>
+
+      <div>
+        <p className="mb-2 text-[13px] font-semibold text-ink-700">🏁 To — Going</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Going to" optional>
+            <Input value={form.goingTo} onChange={(e) => set("goingTo", e.target.value)} placeholder="Hotel, dormitory, campus, family house…" />
+          </Field>
+          <Field label="Departure date" optional>
+            <Input type="date" value={form.departureDate} onChange={(e) => set("departureDate", e.target.value)} min={form.arrivalDate || undefined} />
+          </Field>
+        </div>
       </div>
 
       <div>

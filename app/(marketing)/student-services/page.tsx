@@ -44,9 +44,10 @@ export default function StudentServicesPage() {
 
           <div className="relative">
             <LazyImage
-              src="/images/seed/event-students-2.webp"
-              alt="Welcome to Arba Minch"
+              src="/images/seed/amu.webp"
+              alt="Arba Minch University"
               boxClass="aspect-[4/3] rounded-[2rem] shadow-pop"
+              fill
               sizes="(max-width: 1024px) 100vw, 48vw"
               priority
             />
@@ -58,7 +59,7 @@ export default function StudentServicesPage() {
         </div>
 
         <div className="mt-24">
-          <p className="eyebrow">Four packages</p>
+          <p className="eyebrow">Three packages</p>
           <h2 className="mt-3 font-display text-3xl font-semibold text-ink-900 sm:text-4xl">
             Choose how much help you need
           </h2>

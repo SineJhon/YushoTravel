@@ -266,7 +266,7 @@ async function main() {
   await prisma.studentService.create({
     data: {
       userId: demo.id,
-      package: "COMPLETE",
+      package: "YUSHO_COMPLETE",
       fullName: "Demo Traveller",
       phone: "+251 91 234 5678",
       email: DEMO_EMAIL,

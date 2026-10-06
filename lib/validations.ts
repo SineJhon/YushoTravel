@@ -83,20 +83,33 @@ export const reviewSchema = z.object({
   image: z.string().optional().or(z.literal("")),
 });
 
-export const studentServiceSchema = z.object({
-  package: z.enum(["YUSHO_TOUR", "WELCOME_TOUR", "STAY_WELCOME", "COMPLETE"]),
-  fullName: z.string().trim().min(2, "Enter the student's full name").max(100),
-  phone: z.string().trim().regex(/^[+]?[0-9 ()-]{7,20}$/, "Enter a valid phone number"),
-  email: email.optional().or(z.literal("")),
-  arrivalDate: z.string().optional(),
-  arrivalLocation: z.string().trim().max(80).optional().or(z.literal("")),
-  numberOfFamilyMembers: z.coerce.number().int().min(0).max(30).default(1),
-  hotelRequired: z.boolean().default(false),
-  tourRequired: z.boolean().default(false),
-  registrationAssistance: z.boolean().default(false),
-  dormitoryAssistance: z.boolean().default(false),
-  notes: z.string().trim().max(600).optional().or(z.literal("")),
-});
+export const studentServiceSchema = z
+  .object({
+    package: z.enum(["YUSHO_STAY", "YUSHO_TRAVEL", "YUSHO_COMPLETE"]),
+    fullName: z.string().trim().min(2, "Enter the student's full name").max(100),
+    phone: z.string().trim().regex(/^[+]?[0-9 ()-]{7,20}$/, "Enter a valid phone number"),
+    email: email.optional().or(z.literal("")),
+    arrivalDate: z.string().optional(),
+    arrivalLocation: z.string().trim().max(80).optional().or(z.literal("")),
+    arrivingFrom: z.string().trim().max(100).optional().or(z.literal("")),
+    goingTo: z.string().trim().max(100).optional().or(z.literal("")),
+    departureDate: z.string().optional(),
+    numberOfFamilyMembers: z.coerce.number().int().min(0).max(30).default(1),
+    hotelRequired: z.boolean().default(false),
+    tourRequired: z.boolean().default(false),
+    registrationAssistance: z.boolean().default(false),
+    dormitoryAssistance: z.boolean().default(false),
+    notes: z.string().trim().max(600).optional().or(z.literal("")),
+  })
+  .superRefine((data, ctx) => {
+    if (data.arrivalDate && data.departureDate && data.departureDate < data.arrivalDate) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["departureDate"],
+        message: "The departure (going) date can't be before the arrival date.",
+      });
+    }
+  });
 
 export const privateTourSchema = z
   .object({
