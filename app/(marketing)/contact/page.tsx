@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Clock3, Mail, MapPin, Phone } from "lucide-react";
 import { siteMeta } from "@/lib/seo";
 import { ContactForm } from "@/components/requests/contact-form";
-import { CONTACT_ADDRESS, CONTACT_CITY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY } from "@/lib/constants";
+import { CONTACT_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_2, CONTACT_PHONE_2_TEL, CONTACT_PHONE_TEL } from "@/lib/constants";
 
 export const metadata: Metadata = siteMeta({
   title: "Contact",
@@ -11,9 +12,24 @@ export const metadata: Metadata = siteMeta({
   path: "/contact",
 });
 
-const info = [
-  { icon: <MapPin size={18} />, label: "Address", value: `${CONTACT_ADDRESS} · ${CONTACT_CITY}` },
-  { icon: <Phone size={18} />, label: "Phone / WhatsApp", value: CONTACT_PHONE_DISPLAY, href: "tel:+251468812345" },
+type InfoItem = {
+  icon: ReactNode;
+  label: string;
+  value?: string;
+  href?: string;
+  links?: { label: string; href: string }[];
+};
+
+const info: InfoItem[] = [
+  { icon: <MapPin size={18} />, label: "Address", value: CONTACT_ADDRESS },
+  {
+    icon: <Phone size={18} />,
+    label: "Phone / WhatsApp",
+    links: [
+      { label: CONTACT_PHONE, href: `tel:${CONTACT_PHONE_TEL}` },
+      { label: CONTACT_PHONE_2, href: `tel:${CONTACT_PHONE_2_TEL}` },
+    ],
+  },
   { icon: <Mail size={18} />, label: "Email", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: <Clock3 size={18} />, label: "Office hours", value: "Mon–Sat · 8:30 AM – 6:30 PM" },
 ];
@@ -45,6 +61,12 @@ export default function ContactPage() {
                       <span className="block text-[11px] font-bold uppercase tracking-wider text-sand-100/50">{item.label}</span>
                       {item.href ? (
                         <a href={item.href} className="text-sand-100 hover:text-white">{item.value}</a>
+                      ) : item.links ? (
+                        <span className="flex flex-col gap-0.5">
+                          {item.links.map((l) => (
+                            <a key={l.href} href={l.href} className="text-sand-100 hover:text-white">{l.label}</a>
+                          ))}
+                        </span>
                       ) : (
                         <span className="text-sand-100">{item.value}</span>
                       )}

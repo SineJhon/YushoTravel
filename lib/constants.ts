@@ -178,11 +178,14 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:30
 export const SESSION_COOKIE = "yusho_session";
 export const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
-export const CONTACT_EMAIL = "hello@yushotravel.com";
-export const CONTACT_PHONE = "+251 46 881 2345";
-export const CONTACT_PHONE_DISPLAY = "+251 46 881 2345";
+export const CONTACT_EMAIL = "Yushotravel.et@gmail.com";
+export const CONTACT_PHONE = "+251 93 691 3118";
+export const CONTACT_PHONE_TEL = "+251936913118";
+export const CONTACT_PHONE_2 = "+251 96 359 0716";
+export const CONTACT_PHONE_2_TEL = "+251963590716";
+export const CONTACT_PHONE_DISPLAY = `${CONTACT_PHONE} · ${CONTACT_PHONE_2}`;
 export const CONTACT_CITY = "Arba Minch, Ethiopia";
-export const CONTACT_ADDRESS = "Sikela, Arba Minch, Southern Ethiopia";
+export const CONTACT_ADDRESS = "Arba Minch, Ethiopia";
 
 export const NAV_LINKS = [
   { label: "Destinations", href: "/destinations" },
