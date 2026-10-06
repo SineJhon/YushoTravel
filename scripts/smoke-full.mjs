@@ -30,6 +30,11 @@ async function main() {
   const userRows = await prisma.user.findMany({ where: { email: regEmail } });
   for (const u of userRows) await prisma.user.delete({ where: { id: u.id } });
 
+  // Clean up any destination rows a crashed/interrupted run may have left behind.
+  await prisma.destination.deleteMany({
+    where: { OR: [{ slug: { startsWith: "smoke-dest-" } }, { name: "Smoke Destination" }] },
+  });
+
   await prisma.$disconnect();
 
   console.log(`\n══════════════════════════════`);

@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import { siteMeta } from "@/lib/seo";
 import { getDestinations } from "@/lib/data";
 import { PRICE_BUCKETS, DURATION_FILTERS } from "@/lib/constants";
-import { DestinationFilters } from "@/components/destinations/destination-filters";
 import { DestinationCardView } from "@/components/destinations/destination-card";
 import { EmptyState } from "@/components/ui/skeleton";
 import { Compass } from "lucide-react";
@@ -55,21 +54,8 @@ export default async function DestinationsPage({
           </p>
         </div>
 
-        <div className="mt-6">
-          <DestinationFilters
-            initial={{
-              search: sp.search ?? "",
-              category: sp.category ?? "all",
-              region: sp.region ?? "all",
-              price: sp.price ?? "all",
-              duration: sp.duration ?? "all",
-              sort: sp.sort ?? "popular",
-            }}
-          />
-        </div>
-
         <Suspense fallback={<DestinationsGridSkeleton />}>
-          <div className="mt-8 grid gap-6 pb-24 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 pb-24 sm:grid-cols-2 lg:grid-cols-3">
             {destinations.map((dest) => (
               <DestinationCardView key={dest.id} destination={dest} />
             ))}
@@ -79,11 +65,11 @@ export default async function DestinationsPage({
             <EmptyState
               className="mb-24"
               icon={<Compass size={24} />}
-              title="No destinations match those filters"
-              text="Try a different category, price range or search — or clear the filters to see everything."
+              title="No destinations found"
+              text="Try a different search — or show all destinations."
               action={
                 <Link href="/destinations" className="rounded-full bg-forest-800 px-5 py-2.5 text-sm font-semibold text-white hover:bg-forest-900">
-                  Reset filters
+                  Show all destinations
                 </Link>
               }
             />

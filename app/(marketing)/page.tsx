@@ -14,7 +14,7 @@ export const revalidate = 300; // 5 minutes — fresh destinations without sacri
 
 export default async function HomePage() {
   const [destinations, reviews] = await Promise.all([
-    getFeaturedDestinations(6),
+    getFeaturedDestinations(3),
     getFeaturedReviews(6),
   ]);
 

@@ -63,7 +63,7 @@ export default async function PrivateTourPage() {
             {[
               { title: "Classic Arba Minch", tag: "Forty Springs + Lake Chamo", image: "/images/seed/forty-springs-1.webp", time: "2 days, 1 night" },
               { title: "Highlands & Heritage", tag: "Dorze Village + Dorsso Waterfall", image: "/images/seed/dorze-1.webp", time: "1–2 days" },
-              { title: "Wildlife Special", tag: "Crocodile Ranch + Crocodile Market", image: "/images/seed/croc-ranch-1.webp", time: "1 day" },
+              { title: "Wildlife Special", tag: "Crocodile Ranch + Crocodile Market", image: "/images/seed/crocodileranch.webp", time: "1 day" },
             ].map((idea) => (
               <div key={idea.title} className="group relative overflow-hidden rounded-card">
                 <LazyImage src={idea.image} alt={idea.title} boxClass="aspect-[4/3]" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-700 group-hover:scale-105" />
