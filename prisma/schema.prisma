@@ -229,6 +229,7 @@ model PrivateTourRequest {
   email               String?
   numberOfPeople      Int      @default(2)
   preferredDate       DateTime?
+  preferredEndDate    DateTime?
   destinations        String // JSON array of destination names/slugs
   transportPreference String?
   hotelRequired       Boolean  @default(false)

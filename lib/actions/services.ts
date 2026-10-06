@@ -79,6 +79,7 @@ export async function createPrivateTourAction(input: unknown): Promise<ActionRes
       email: data.email || null,
       numberOfPeople: data.numberOfPeople,
       preferredDate: data.preferredDate ? new Date(`${data.preferredDate}T12:00:00`) : null,
+      preferredEndDate: data.preferredEndDate ? new Date(`${data.preferredEndDate}T12:00:00`) : null,
       destinations: JSON.stringify(destinations.map((d) => d.name)),
       transportPreference: data.transportPreference || null,
       hotelRequired: data.hotelRequired,

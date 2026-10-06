@@ -290,6 +290,7 @@ async function main() {
       email: DEMO_EMAIL,
       numberOfPeople: 4,
       preferredDate: daysFromNow(30, 8),
+      preferredEndDate: daysFromNow(34, 8),
       destinations: JSON.stringify(["Lake Chamo", "Dorze Village"]),
       transportPreference: "Private vehicle for the tour",
       hotelRequired: true,

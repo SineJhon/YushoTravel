@@ -85,7 +85,7 @@ export default async function RequestsPage() {
                       </div>
                       <p className="mt-1 text-sm text-ink-500">
                         <CalendarDays size={13} className="mr-1 inline text-teal-700" />
-                        {req.preferredDate ? formatDate(req.preferredDate) : "Flexible dates"} · {places.join(", ")}
+                        {req.preferredDate ? (req.preferredEndDate ? `${formatDate(req.preferredDate)} – ${formatDate(req.preferredEndDate)}` : formatDate(req.preferredDate)) : "Flexible dates"} · {places.join(", ")}
                       </p>
                       <p className="mt-0.5 text-xs text-ink-400">Requested {formatDateTime(req.createdAt)}</p>
                       {req.quotation != null && (

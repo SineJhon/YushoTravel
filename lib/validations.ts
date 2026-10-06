@@ -98,19 +98,30 @@ export const studentServiceSchema = z.object({
   notes: z.string().trim().max(600).optional().or(z.literal("")),
 });
 
-export const privateTourSchema = z.object({
-  name: z.string().trim().min(2, "Enter your full name").max(80),
-  phone: z.string().trim().regex(/^[+]?[0-9 ()-]{7,20}$/, "Enter a valid phone number"),
-  email: email.optional().or(z.literal("")),
-  numberOfPeople: z.coerce.number().int().min(1, "At least one person").max(40),
-  preferredDate: z.string().optional(),
-  destinationIds: z.array(z.string()).min(1, "Pick at least one destination"),
-  transportPreference: z.string().trim().max(80).optional().or(z.literal("")),
-  hotelRequired: z.boolean().default(false),
-  foodRequired: z.boolean().default(false),
-  specialRequests: z.string().trim().max(1000).optional().or(z.literal("")),
-  budgetRange: z.string().trim().max(80).optional().or(z.literal("")),
-});
+export const privateTourSchema = z
+  .object({
+    name: z.string().trim().min(2, "Enter your full name").max(80),
+    phone: z.string().trim().regex(/^[+]?[0-9 ()-]{7,20}$/, "Enter a valid phone number"),
+    email: email.optional().or(z.literal("")),
+    numberOfPeople: z.coerce.number().int().min(1, "At least one person").max(40),
+    preferredDate: z.string().optional(),
+    preferredEndDate: z.string().optional(),
+    destinationIds: z.array(z.string()).min(1, "Pick at least one destination"),
+    transportPreference: z.string().trim().max(80).optional().or(z.literal("")),
+    hotelRequired: z.boolean().default(false),
+    foodRequired: z.boolean().default(false),
+    specialRequests: z.string().trim().max(1000).optional().or(z.literal("")),
+    budgetRange: z.string().trim().max(80).optional().or(z.literal("")),
+  })
+  .superRefine((data, ctx) => {
+    if (data.preferredDate && data.preferredEndDate && data.preferredEndDate < data.preferredDate) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["preferredEndDate"],
+        message: "The return date can't be before the start date.",
+      });
+    }
+  });
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(80),

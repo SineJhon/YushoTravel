@@ -73,7 +73,7 @@ export default async function AdminServicesPage({ searchParams }: { searchParams
                   <Badge tone={status.tone} dot>{status.label}</Badge>
                 </div>
                 <p className="mt-3 text-sm text-ink-700">
-                  {req.numberOfPeople} people · {req.preferredDate ? formatDate(req.preferredDate) : "flexible dates"} · {req.budgetRange ?? "no budget hint"} · transport: {req.transportPreference ?? "—"}
+                  {req.numberOfPeople} people · {req.preferredDate ? (req.preferredEndDate ? `${formatDate(req.preferredDate)} – ${formatDate(req.preferredEndDate)}` : formatDate(req.preferredDate)) : "flexible dates"} · {req.budgetRange ?? "no budget hint"} · transport: {req.transportPreference ?? "—"}
                 </p>
                 {req.specialRequests && <p className="mt-1 text-sm text-ink-500"><b>Special requests:</b> {req.specialRequests}</p>}
                 {req.quotation != null && (

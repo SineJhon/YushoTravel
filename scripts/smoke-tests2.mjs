@@ -9,7 +9,7 @@ export async function testRequests(demo, regEmail, ids) {
 
   let r = await call(A.privateTour, {
     name: "Smoke Tester", phone: "+251911111111", email: regEmail, numberOfPeople: 3,
-    preferredDate: futureDate(15), destinationIds: [destination.id],
+    preferredDate: futureDate(15), preferredEndDate: futureDate(18), destinationIds: [destination.id],
     transportPreference: "Private vehicle for the tour",
     hotelRequired: true, foodRequired: false, budgetRange: "ETB 10,000 – 25,000",
   }, demo);
